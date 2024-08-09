@@ -31,7 +31,9 @@ function App() {
     // Fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://192.168.1.208:8080/projects/doing");
+        const configResponse = await axios.get('./config.json');
+        const apiBaseUrl = configResponse.data.apiBaseUrl;
+        const response = await axios.get(`${apiBaseUrl}/projects/doing`);
         setMocked(response.data); // Assuming response.data is an array of SchedulerProjectData
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -41,7 +43,7 @@ function App() {
     fetchData();
   }, []);
 
-  console.log("Mocked Data: ", mocked);
+  //console.log("Mocked Data: ", mocked);
 
   const [range, setRange] = useState<ParsedDatesRange>({
     startDate: new Date(),
